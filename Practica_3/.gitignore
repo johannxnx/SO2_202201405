@@ -1,0 +1,35 @@
+# =========================
+# Ignorar TODO el kernel (solo primer nivel)
+# =========================
+linux-6.12.69/*
+
+# PERMITIR solo el Makefile del kernel
+!linux-6.12.69/Makefile
+
+# =========================
+# Ignorar compilación
+# =========================
+*.o
+*.ko
+*.mod
+*.mod.c
+*.order
+*.symvers
+*.a
+*.bin
+*.elf
+*.log
+.config
+.config.old
+Module.symvers
+
+# =========================
+# Basura del sistema
+# =========================
+.DS_Store
+Thumbs.db
+*~
+*.swp
+
+# VSCode
+.vscode/

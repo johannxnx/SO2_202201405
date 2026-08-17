@@ -1,0 +1,64 @@
+# Archivos compilados del kernel
+*.o
+*.a
+*.cmd
+*.mod.c
+*.ko
+
+# Archivos de compilación kernel
+.built-in.a.cmd
+.get_system_monitor.o.cmd
+.modules.order.cmd
+built-in.a
+modules.order
+
+# Archivos ejecutables compilados
+user/monitor_daemon
+user/*.o
+
+# Dependencies de Node.js
+backend/node_modules/
+backend/npm-debug.log
+backend/yarn-error.log
+backend/.npm
+
+# Archivos temporales
+/tmp/
+*.log
+*.tmp
+*.temp
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# Archivos de editor
+*.swp
+*.swo
+*~
+.vscode
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos temporales del sistema
+.cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Keep essentials (uncomment to ensure they're tracked)
+!Makefile
+!get_system_monitor.c
+!user/monitor_daemon.c
+!backend/package.json
+!backend/package-lock.json
+!backend/server.js
+!frontend/index.html
+!frontend/app.js
+!frontend/style.css
+!Documentacion/Manual_Tecnico.md

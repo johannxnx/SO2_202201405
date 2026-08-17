@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Seguridad</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- PANTALLA DE LOGIN -->
+    <div id="login-screen" class="login-screen active">
+        <div class="login-container">
+            <div class="login-box">
+                <h1>Sistema de Seguridad</h1>
+                <p class="login-subtitle">Autenticación requerida</p>
+
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="username">Usuario</label>
+                        <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                    </div>
+
+                    <div id="login-error" class="login-error" style="display: none;"></div>
+
+                    <button type="submit" class="btn-login">Iniciar Sesión</button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Usuarios disponibles en el sistema:</p>
+                    <p><strong>Usuario admin:</strong> (usuario en grupo sudo)</p>
+                    <p><strong>Usuario común:</strong> (usuario sin privilegios)</p>
+                    <p style="font-size: 11px; margin-top: 10px; color: #888;">Ingresa tu usuario y contraseña del sistema</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PRINCIPAL -->
+    <div id="dashboard-screen" class="dashboard-screen">
+        <div class="container">
+        <header>
+            <h1>Sistema de Seguridad</h1>
+            <div class="header-right">
+                <div class="user-info">
+                    <span id="user-display">Usuario</span>
+                    <span id="role-display" class="role-badge">admin</span>
+                </div>
+                <div class="status" id="status">Estado: Conectando...</div>
+                <button class="btn-logout" onclick="handleLogout()">Cerrar Sesión</button>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" onclick="showTab('monitor')">Monitoreo</button>
+            <button class="tab-button" onclick="showTab('files')">Archivos</button>
+            <button class="tab-button" onclick="showTab('processes')">Procesos</button>
+            <button class="tab-button" onclick="showTab('alerts')">Alertas</button>
+            <button class="tab-button" onclick="showTab('quarantine')">Cuarentena</button>
+        </nav>
+
+        <!-- TAB: MONITOREO -->
+        <div id="monitor" class="tab-content active">
+            <h2>Métricas del Sistema</h2>
+            <div id="admin-scan-controls" class="admin-panel">
+                <h3>Control de Escaneo (Admin)</h3>
+                <div class="admin-actions">
+                    <button class="btn btn-primary" onclick="startScan()">Activar escaneo</button>
+                    <button class="btn btn-danger" onclick="stopScan()">Desactivar escaneo</button>
+                    <span id="scan-status-text" class="scan-status">Estado escaneo: desconocido</span>
+                </div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>Memoria</h3>
+                    <div class="metric-value" id="mem-used">-</div>
+                    <div class="metric-label">Usada (GB)</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Memoria Libre</h3>
+                    <div class="metric-value" id="mem-free">-</div>
+                    <div class="metric-label">Libre (GB)</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Memoria Cache</h3>
+                    <div class="metric-value" id="mem-cache">-</div>
+                    <div class="metric-label">Cache (GB)</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Swap Usada</h3>
+                    <div class="metric-value" id="swap-used">-</div>
+                    <div class="metric-label">Swap (GB)</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Fallos Menores</h3>
+                    <div class="metric-value" id="faults-minor">-</div>
+                    <div class="metric-label">Total</div>
+                    <div class="metric-delta" id="faults-minor-delta">Δ: - cada 5s</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Fallos Mayores</h3>
+                    <div class="metric-value" id="faults-major">-</div>
+                    <div class="metric-label">Total</div>
+                    <div class="metric-delta" id="faults-major-delta">Δ: - cada 5s</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Páginas Activas</h3>
+                    <div class="metric-value" id="pages-active">-</div>
+                    <div class="metric-label">Total</div>
+                    <div class="metric-subtext" id="pages-active-gb">- GB</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Páginas Inactivas</h3>
+                    <div class="metric-value" id="pages-inactive">-</div>
+                    <div class="metric-label">Total</div>
+                    <div class="metric-subtext" id="pages-inactive-gb">- GB</div>
+                </div>
+            </div>
+
+            <!-- GRÁFICAS -->
+            <div class="charts-container">
+                <div class="chart-item">
+                    <h3>Distribución de Memoria</h3>
+                    <canvas id="grafica_memoria"></canvas>
+                </div>
+                <div class="chart-item">
+                    <h3>Fallos de Página</h3>
+                    <canvas id="grafica_fallos"></canvas>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-item">
+                    <h3>Estado de Páginas</h3>
+                    <canvas id="grafica_paginas"></canvas>
+                </div>
+                <div class="chart-item">
+                    <h3>Procesos con Mayor Uso de Memoria (%)</h3>
+                    <canvas id="grafica_procesos"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container-full">
+                <h3>Evolución del Uso de Memoria</h3>
+                <canvas id="grafica_evolucion"></canvas>
+            </div>
+
+            <div class="refresh-info">Última actualización: <span id="update-time">-</span></div>
+        </div>
+
+        <!-- TAB: ARCHIVOS -->
+        <div id="files" class="tab-content">
+            <h2>Archivos Monitoreados</h2>
+            <h3>Visualización de Archivos Analizados</h3>
+            <div id="files-list" class="files-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ruta</th>
+                            <th>Tamaño (bytes)</th>
+                            <th>Hash (SHA-256)</th>
+                            <th>Timestamp</th>
+                            <th>Estado</th>
+                            <th>Malware</th>
+                            <th>Severidad</th>
+                        </tr>
+                    </thead>
+                    <tbody id="files-body">
+                        <tr><td colspan="7">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 style="margin-top: 40px;">Visualización de Amenazas Detectadas</h3>
+            <div id="threats-list" class="threats-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre de Amenaza</th>
+                            <th>Archivo Afectado</th>
+                            <th>Severidad</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="threats-body">
+                        <tr><td colspan="4">Sin amenazas detectadas</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB: PROCESOS -->
+        <div id="processes" class="tab-content">
+            <h2>Procesos Sospechosos</h2>
+            <div id="admin-process-info" class="admin-panel">
+                <h3>Consultar Proceso por PID (Admin)</h3>
+                <div class="admin-actions">
+                    <input type="number" id="pid-input" placeholder="PID" min="1">
+                    <button class="btn btn-primary" onclick="fetchProcessInfo()">Consultar</button>
+                </div>
+                <div id="pid-result" class="pid-result">Sin consulta realizada.</div>
+            </div>
+            <div id="processes-list" class="processes-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>Nombre</th>
+                            <th>RSS (GB)</th>
+                            <th>VM (GB)</th>
+                            <th>% Memoria</th>
+                        </tr>
+                    </thead>
+                    <tbody id="processes-body">
+                        <tr><td colspan="5">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB: ALERTAS -->
+        <div id="alerts" class="tab-content">
+            <h2>Historial de Alertas</h2>
+            <div id="alerts-list" class="alerts-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Tipo</th>
+                            <th>Severidad</th>
+                            <th>Mensaje</th>
+                            <th>Archivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alerts-body">
+                        <tr><td colspan="5">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB: CUARENTENA -->
+        <div id="quarantine" class="tab-content">
+            <h2>Archivos en Cuarentena</h2>
+            <div id="quarantine-list" class="quarantine-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ruta</th>
+                            <th>Timestamp Cuarentena</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quarantine-body">
+                        <tr><td colspan="3">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+# Binarios compilados
+daemon_monitor
+server_http
+test_panic
+*.o
+*.a
+
+# Ejecutables generados
+/ProgramaIntermedio/daemon_monitor
+/ProgramaIntermedio/server_http
+/ProgramaIntermedio/test_panic
+/ProgramaIntermedio/*.out
+
+# Logs y archivos temporales
+logs/
+*.log
+/ProgramaIntermedio/logs/
+
+# Almacenamiento de cuarentena local
+config/quarantine_storage/
+/ProgramaIntermedio/config/quarantine_storage/
+
+# Archivos temporales del kernel y compilación
+*.tmp
+*.swp
+*.swo
+*~
+.vscode/
+.DS_Store
+
+# Node modules (si aplica)
+node_modules/
+package-lock.json
+
+# Carpeta del kernel Linux (muy grande para pushear)
+/ProgramaIntermedio/linux-6.12.69/
+linux-6.12.69/
+
+# Archivos de prueba generados
+test_daemon
+test_daemon.c
+
+# Directorios de construcción
+build/
+dist/
+obj/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Files generated at runtime
+/tmp/
+*.json.backup
+state_file.tmp

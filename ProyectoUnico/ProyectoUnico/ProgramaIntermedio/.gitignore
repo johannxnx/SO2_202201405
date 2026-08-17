@@ -1,0 +1,26 @@
+# Binarios compilados
+daemon_monitor
+server_http
+test_panic
+*.out
+*.o
+
+# Logs
+logs/*.log
+*.log
+
+# Almacenamiento de cuarentena
+config/quarantine_storage/
+
+# Temporales
+*.tmp
+*.swp
+*~
+.DS_Store
+
+# Node modules
+node_modules/
+
+# Archivos de estado
+/tmp/
+*.backup

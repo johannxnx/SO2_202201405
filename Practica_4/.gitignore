@@ -1,0 +1,10 @@
+*
+
+!*/
+!src/linux-6.12.69/kernel/sys.c
+!src/linux-6.12.69/.config
+!src/linux-6.12.69/Makefile
+!README.md
+!.gitignore
+!documentación/
+!documentación/**

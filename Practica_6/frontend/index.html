@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard de Monitoreo</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Práctica #6 - Dashboard de Monitoreo del Sistema</h1>
+      <p class="student-info">Johan Moises Cardona Rosales - 202201405</p>
+    </div>
+    <p id="status">Cargando datos...</p>
+
+    <div class="cards">
+      <div class="card"><h3>Memoria usada</h3><p id="memoria_usada">-</p></div>
+      <div class="card"><h3>Memoria libre</h3><p id="memoria_libre">-</p></div>
+      <div class="card"><h3>Memoria cache</h3><p id="memoria_cache">-</p></div>
+      <div class="card"><h3>Swap usada</h3><p id="swap_usada">-</p></div>
+      <div class="card"><h3>Fallos menores</h3><p id="fallos_menores">-</p></div>
+      <div class="card"><h3>Fallos mayores</h3><p id="fallos_mayores">-</p></div>
+      <div class="card"><h3>Páginas activas</h3><p id="paginas_activas">-</p></div>
+      <div class="card"><h3>Páginas inactivas</h3><p id="paginas_inactivas">-</p></div>
+    </div>
+
+    <div class="input-section">
+      <h2>Consultar proceso específico</h2>
+      <input type="number" id="pid_input" placeholder="Ingresa un PID" />
+      <button id="btn_consultar">Consultar</button>
+      <p id="info_proceso" style="display:none;"></p>
+    </div>
+
+    <h2>Procesos con mayor consumo de memoria</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>PID</th>
+          <th>Nombre</th>
+          <th>Memoria (KB)</th>
+          <th>% Memoria</th>
+        </tr>
+      </thead>
+      <tbody id="tabla_procesos"></tbody>
+    </table>
+
+    <h2>Gráficas del sistema</h2>
+    <div class="charts">
+      <div class="chart-card">
+        <h3>Uso de memoria</h3>
+        <canvas id="grafica_memoria"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Fallos de página</h3>
+        <canvas id="grafica_fallos"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Estado de las páginas de memoria</h3>
+        <canvas id="grafica_paginas"></canvas>
+      </div>
+
+      <div class="chart-card full-width">
+        <h3>Evolución del uso de memoria en el tiempo</h3>
+        <canvas id="grafica_evolucion"></canvas>
+      </div>
+
+      <div class="chart-card full-width">
+        <h3>Procesos con mayor consumo</h3>
+        <canvas id="grafica_procesos"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

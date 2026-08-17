@@ -1,0 +1,50 @@
+[
+  {
+    "hash": "e29a876b913759bc5ebf8eedce53e77f22138c53c027d6d89d6208c644240fec",
+    "nombre": "Simulated.Ransomware.Encryptor",
+    "severidad": "HIGH",
+    "descripcion": "Simulated threat: Simulated.Ransomware.Encryptor"
+  },
+  {
+    "hash": "baa023f86cffefb2c3b21521cf59a72b7edc093484fb532c46c705426f8d661c",
+    "nombre": "Simulated.Backdoor.Listener",
+    "severidad": "HIGH",
+    "descripcion": "Simulated threat: Simulated.Backdoor.Listener"
+  },
+  {
+    "hash": "97c80b057d5269c455d2363487a098278df094ad6d6a5ca89f1bde049b7b8b7d",
+    "nombre": "Simulated.Keylogger.Basic",
+    "severidad": "MEDIUM",
+    "descripcion": "Simulated threat: Simulated.Keylogger.Basic"
+  },
+  {
+    "hash": "f48ea344451fe721d15c7124628df73d53f047123a04472c6ff79325845e0091",
+    "nombre": "Simulated.Trojan.Downloader",
+    "severidad": "MEDIUM",
+    "descripcion": "Simulated threat: Simulated.Trojan.Downloader"
+  },
+  {
+    "hash": "470eed5b6f546e420020e5b6e0bc2813022334eef3c0ed4794fe030eb7822adb",
+    "nombre": "Simulated.Adware.Popup",
+    "severidad": "LOW",
+    "descripcion": "Simulated threat: Simulated.Adware.Popup"
+  },
+  {
+    "hash": "3b42566a98248e1644fa88f046117b1f9c8eb8bf02c78b11ae8c88193d366219",
+    "nombre": "Simulated.Spyware.Tracker",
+    "severidad": "MEDIUM",
+    "descripcion": "Simulated threat: Simulated.Spyware.Tracker"
+  },
+  {
+    "hash": "ebb7986a129d3ce7ade33a7cfbab35beba5fae2719d5851f5c921f0b0fdc8805",
+    "nombre": "Simulated.Worm.Spreader",
+    "severidad": "HIGH",
+    "descripcion": "Simulated threat: Simulated.Worm.Spreader"
+  },
+  {
+    "hash": "4563a1b10cfc83b42e11a050e0fc2ac70d8ee84a0fb8b37c8160cf89beb813df",
+    "nombre": "Simulated.Clean.File",
+    "severidad": "LOW",
+    "descripcion": "Simulated threat: Simulated.Clean.File"
+  }
+]
